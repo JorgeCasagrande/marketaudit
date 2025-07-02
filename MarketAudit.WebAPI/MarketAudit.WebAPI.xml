@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MarketAudit.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:Marketaudit.WebAPI.Controllers.AuthController.Login(MarketAudit.Entities.Models.Request.Login_Request)">
+            <summary>
+            Servicio para realizar el Login del usuario
+            </summary>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.CustomerController.GetCustomers(System.String)">
+            <summary>
+            Return all Customers ordered by Name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.CustomerController.GetStates">
+            <summary>
+            Return all Customer State
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.CustomerController.Enable(System.Int64[])">
+            <summary>
+            Update selected customers states
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.CustomerController.Delete(System.Int64[])">
+            <summary>
+            Delete selected customers states
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.CustomerController.Save(MarketAudit.Entities.Models.Customer)">
+            <summary>
+            Save new or selected customers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.CustomerController.GetNewCustomer">
+            <summary>
+            return form for new customer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.CustomerController.GetCustomer(System.Int64)">
+            <summary>
+            return form for new customer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetProjects(System.String,System.String)">
+            <summary>
+            Return all Projects ordered by Name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetProjectReports">
+            <summary>
+            Return all Responsables
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetQuestionByProjectId(System.Int64)">
+            <summary>
+            Return questions by projectId
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetPdvByProjectId(System.Int64)">
+            <summary>
+            Return pdvs by projectId
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetResponsables">
+            <summary>
+            Return all Responsables
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetStates">
+            <summary>
+            Return all States
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.Enable(System.Int64[])">
+            <summary>
+            Update selected Project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.Save(MarketAudit.Entities.Models.Project)">
+            <summary>
+            Save new or selected Project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetNewProject">
+            <summary>
+            return form for new project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ProjectController.GetProject(System.Int64)">
+            <summary>
+            return form for new project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.ReportController.CreateReport(MarketAudit.Entities.Models.Request.InfoProject)">
+            <summary>
+            Servicio para enviar los datos de las encuestas
+            </summary>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.GetUsers(System.String,System.String)">
+            <summary>
+            Return all Users ordered by Name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.GetRoles">
+            <summary>
+            Return all User Rol
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.GetStates">
+            <summary>
+            Return all User State
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.Enable(System.Int64[])">
+            <summary>
+            Update selected Users 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.Delete(System.Int64[])">
+            <summary>
+            Delete selected Users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.Save(MarketAudit.Entities.Models.User)">
+            <summary>
+            Save new or selected Users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.GetNewUser">
+            <summary>
+            return form for new User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Marketaudit.WebAPI.Controllers.UserController.GetUser(System.Int64)">
+            <summary>
+            return form for new User
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
