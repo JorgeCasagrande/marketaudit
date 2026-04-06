@@ -25,7 +25,7 @@ namespace Marketaudit.DataAccess.Repositories
             string query = string.Format("SELECT P.Id, RP.RouteId, P.Number AS PdvNumber, P.Name AS PdvName, P.Description as PdvDescription, P.Address AS PdvAddress " +
                 "FROM Routes_Pdvs RP " +
                 "JOIN {0} P ON RP.PdvId = P.Id " +
-                "WHERE RP.RouteId = {1}", TABLE_NAME, routeId);
+                "WHERE RP.RouteId = {1} AND RP.IsDeleted = 0 AND P.IsDeleted = 0", TABLE_NAME, routeId);
 
             var result = ExecuteQuery(query);
 
@@ -52,7 +52,7 @@ namespace Marketaudit.DataAccess.Repositories
         {
             string query = string.Format("SELECT COUNT(RP.ID) CountPdv FROM Routes_Pdvs RP " +
                 "JOIN ROUTE R ON RP.RouteId = R.Id " +
-                "WHERE R.ProjectId = {0} AND R.CensistId = {1}", projectId, userId);
+                "WHERE R.ProjectId = {0} AND R.CensistId = {1} AND RP.IsDeleted = 0", projectId, userId);
 
             var result = ExecuteQuery(query);
 
@@ -68,7 +68,7 @@ namespace Marketaudit.DataAccess.Repositories
                 "FROM Routes_Pdvs RP " +
                 "JOIN {0} P ON RP.PdvId = P.Id " +
                 "JOIN Route R ON RP.RouteId = R.Id " +
-                "WHERE R.CensistId = {1} AND P.VISIBLE = 1 ", TABLE_NAME, userId);
+                "WHERE R.CensistId = {1} AND P.VISIBLE = 1 AND P.IsDeleted = 0 AND RP.IsDeleted = 0 ", TABLE_NAME, userId);
 
             IDbConnection conn = new SqlConnection(GlobalVariables.GetDatabaseConnectionString());
             conn.Open();
@@ -91,7 +91,7 @@ namespace Marketaudit.DataAccess.Repositories
                 "from Routes_Pdvs rp inner join [Route] r on rp.RouteId = r.Id " +
                 "left join [User] u on r.CensistId = u.Id join Pdv p on rp.PdvId = p.Id " +
                 "join Pdv_Type ptype on p.PdvTypeId = ptype.Id " +
-                "WHERE R.ProjectId = {0}", projectId);
+                "WHERE R.ProjectId = {0} AND p.IsDeleted = 0 AND rp.IsDeleted = 0", projectId);
 
             var result = ExecuteQuery(query);
 
@@ -152,7 +152,7 @@ namespace Marketaudit.DataAccess.Repositories
                      join Pdv p on RP.PdvId = P.Id 
                      where R.ProjectId = @ProjectId " + 
                      (!string.IsNullOrEmpty(userId) ? "and r.censistId in (@userId) " : string.Empty) +
-                     "ORDER BY P.NUMBER";
+                     "AND p.IsDeleted = 0 AND rp.IsDeleted = 0 ORDER BY P.NUMBER";
 
 
 
@@ -191,7 +191,7 @@ namespace Marketaudit.DataAccess.Repositories
                 join [User] u on r.CensistId = u.Id
                 join Pdv p on rp.PdvId = p.Id
                 join Pdv_Type pt on p.PdvTypeId = pt.Id
-                WHERE r.ProjectId = @ProjectId";
+                WHERE r.ProjectId = @ProjectId AND p.IsDeleted = 0 AND rp.IsDeleted = 0";
 
             IDbConnection conn = new SqlConnection(GlobalVariables.GetDatabaseConnectionString());
             conn.Open();

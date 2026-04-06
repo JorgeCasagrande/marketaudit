@@ -1,7 +1,7 @@
 {
   "PathLogs": "./LogsMk",
-  "ConnectionString": "ConnectionString",
-  "ReportConnectionString": "ReportConnectionString",
+  "ConnectionString": "Data Source=192.96.219.2,1433; initial catalog=MarketDev_V2;User ID=userdb;Password=Weask2021",
+  "ReportConnectionString": "Data Source=192.96.219.2,1433; initial catalog=MarketReport_Db;User ID=userdb;Password=Weask2021",
   "$schema": "http://json-schema.org/draft-04/schema",
   "title": "JSON Schema for my JSON file format",
 

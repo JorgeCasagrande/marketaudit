@@ -43,37 +43,40 @@ namespace MarketAudit.Service.Services
                     var routeId = routeRepository.GetRouteId(model.ProjectId, model.UserId, item.PdvId);
                     logger.LogInfo(string.Format("Pdv: {0} - Ruta: {1}", item.PdvId, routeId));
 
-                    if(!repository.ExistReport(model.UserId, model.ProjectId, item.PdvId, routeId, transaction))
+                    if(routeId != 0)
                     {
-                        repository.Create(model.UserId, model.ProjectId, item.PdvId, routeId, transaction);
-                        var reportMasterId = repository.GetReportMasterId(model.UserId, model.ProjectId, item.PdvId, routeId, transaction);
-                        repository.CreateDetail(reportMasterId, model.ProjectId, transaction);
-
-                        foreach (var item2 in item.Questions)
+                        if (!repository.ExistReport(model.UserId, model.ProjectId, item.PdvId, routeId, transaction))
                         {
-                            questionId = item2.QuestionId;
-                            item2.Order = item2.Order != 0 ? item2.Order : repository.GetOrderQuestion(item2.QuestionId, transaction);
-                            orden = item2.Order;
-                            repository.UpdateDetail(reportMasterId, item2.QuestionId, item2.Order, item2.Value, transaction);
+                            repository.Create(model.UserId, model.ProjectId, item.PdvId, routeId, transaction);
+                            var reportMasterId = repository.GetReportMasterId(model.UserId, model.ProjectId, item.PdvId, routeId, transaction);
+                            repository.CreateDetail(reportMasterId, model.ProjectId, transaction);
+
+                            foreach (var item2 in item.Questions)
+                            {
+                                questionId = item2.QuestionId;
+                                item2.Order = item2.Order != 0 ? item2.Order : repository.GetOrderQuestion(item2.QuestionId, transaction);
+                                orden = item2.Order;
+                                repository.UpdateDetail(reportMasterId, item2.QuestionId, item2.Order, item2.Value, transaction);
+                            }
+
+                            transaction.Commit();
+                            logger.LogInfo(string.Format("Pdv Generado correctamente - Pdv: {0} - Ruta: {1}", item.PdvId, routeId));
                         }
-
-                        transaction.Commit();
-                        logger.LogInfo(string.Format("Pdv Generado correctamente - Pdv: {0} - Ruta: {1}", item.PdvId, routeId));
-                    }
-                    else
-                    {
-                        var reportMasterId = repository.GetReportMasterId(model.UserId, model.ProjectId, item.PdvId, routeId, transaction);
-
-                        foreach (var item2 in item.Questions)
+                        else
                         {
-                            questionId = item2.QuestionId;
-                            item2.Order = item2.Order != 0 ? item2.Order : repository.GetOrderQuestion(item2.QuestionId, transaction);
-                            orden = item2.Order;
-                            repository.UpdateDetail(reportMasterId, item2.QuestionId, item2.Order, item2.Value, transaction);
-                        }
+                            var reportMasterId = repository.GetReportMasterId(model.UserId, model.ProjectId, item.PdvId, routeId, transaction);
 
-                        transaction.Commit();
-                        logger.LogInfo(string.Format("Reporte Actualizado - Proyecto: {0} - Censista: {1} - Pdv: {2} - Ruta: {3}", model.ProjectId, model.UserId, item.PdvId, routeId));
+                            foreach (var item2 in item.Questions)
+                            {
+                                questionId = item2.QuestionId;
+                                item2.Order = item2.Order != 0 ? item2.Order : repository.GetOrderQuestion(item2.QuestionId, transaction);
+                                orden = item2.Order;
+                                repository.UpdateDetail(reportMasterId, item2.QuestionId, item2.Order, item2.Value, transaction);
+                            }
+
+                            transaction.Commit();
+                            logger.LogInfo(string.Format("Reporte Actualizado - Proyecto: {0} - Censista: {1} - Pdv: {2} - Ruta: {3}", model.ProjectId, model.UserId, item.PdvId, routeId));
+                        }
                     }
                 }
                 catch (Exception ex)

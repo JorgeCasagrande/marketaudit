@@ -79,7 +79,17 @@ namespace Marketaudit.DataAccess.Repositories
 
             var result = ExecuteQuery(query);
 
+            if (result == null || result.Count == 0)
+            {
+                return 0;
+            }
+
             var row = result[0];
+
+            if (row["ID"] == DBNull.Value || row["ID"] == null)
+            {
+                return 0;
+            }
 
             return ToLong(row["ID"]);
         }
