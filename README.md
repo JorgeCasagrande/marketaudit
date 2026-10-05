@@ -518,7 +518,7 @@ Cliente ──POST /api/Auth/Login {User, Password}──► AuthController
 | Migraciones | **No existen.** No hay EF Core, scripts DDL ni seeds en el repositorio |
 | Datos maestros requeridos | `Role` (incluido el id 4 = responsable), `State` (1/2/3 con códigos `CREATE`/`APP`), `State_Report` (`PENDING`), `Project_Type`, `Pdv_Type`, `Question_Type` (incluido id 3 = foto), `Data_Type`, `Recursos` |
 
-> ⚠️ **El esquema de base de datos y los stored procedures no están versionados en este repositorio.** Para levantar un entorno nuevo es necesario obtener un backup o script de la base existente (tablas, SPs y datos maestros). Responsable/ubicación: no determinado.
+> **El esquema de base de datos y los stored procedures no están versionados en este repositorio.** Para levantar un entorno nuevo se debe restaurar el backup de la base entregado junto con el código (tablas, SPs y datos maestros).
 
 ---
 
@@ -561,7 +561,7 @@ El `App.json` versionado contiene valores *placeholder*. **No commitear credenci
 
 - **.NET Core SDK 3.1** (el target es `netcoreapp3.1`; .NET Core 3.1 está fuera de soporte, instalar el SDK 3.1.x explícitamente). Alternativa: Visual Studio 2019 (la solución fue creada con VS; hay rutas Windows en el `.csproj`).
 - **SQL Server** (2017+) accesible, con la base principal y la base de reportes.
-- Acceso a los scripts/backup de la base (ver [Persistencia](#9-persistencia)).
+- El backup de la base entregado junto con el código (ver [Persistencia](#9-persistencia)).
 
 ### Pasos
 
@@ -578,7 +578,7 @@ dotnet restore MarketAudit.sln
 dotnet build MarketAudit.sln
 
 # 4. Preparar la base de datos
-#    No hay migraciones: restaurar backup/scripts de la base principal
+#    No hay migraciones: restaurar el backup entregado de la base principal
 #    (tablas, stored procedures y datos maestros) y crear la base de reportes (vacía).
 
 # 5. Iniciar la API (ejecutar desde la carpeta del proyecto: nlog.config y ./LogsMk
@@ -687,7 +687,7 @@ Orden recomendado para levantar MarketAudit completo en local:
 ```text
 1. Base de datos
    └─ Restaurar la base principal (tablas + SPs + datos maestros) y crear la base de reportes.
-      ⚠️ Scripts/backup no incluidos en los repos: solicitarlos.
+      Usar el backup entregado junto con el código.
 2. Backend (este repo)
    └─ Configurar MarketAudit.WebAPI/App.json (ConnectionString, ReportConnectionString).
 3. Ejecutar Backend
