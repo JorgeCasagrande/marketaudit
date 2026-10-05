@@ -518,7 +518,7 @@ Cliente ──POST /api/Auth/Login {User, Password}──► AuthController
 | Migraciones | **No existen.** No hay EF Core, scripts DDL ni seeds en el repositorio |
 | Datos maestros requeridos | `Role` (incluido el id 4 = responsable), `State` (1/2/3 con códigos `CREATE`/`APP`), `State_Report` (`PENDING`), `Project_Type`, `Pdv_Type`, `Question_Type` (incluido id 3 = foto), `Data_Type`, `Recursos` |
 
-> **El esquema de base de datos y los stored procedures no están versionados en este repositorio.** Para levantar un entorno nuevo se debe restaurar el backup de la base entregado junto con el código (tablas, SPs y datos maestros).
+> **El esquema de base de datos y los stored procedures no están versionados en este repositorio.** Para levantar un entorno nuevo se debe restaurar el backup entregado junto con el código, que contiene la base completa con datos (tablas, SPs, datos maestros y datos de negocio).
 
 ---
 
@@ -578,8 +578,8 @@ dotnet restore MarketAudit.sln
 dotnet build MarketAudit.sln
 
 # 4. Preparar la base de datos
-#    No hay migraciones: restaurar el backup entregado de la base principal
-#    (tablas, stored procedures y datos maestros) y crear la base de reportes (vacía).
+#    No hay migraciones: restaurar el backup entregado junto con el código
+#    (base completa con datos) y crear la base de reportes (vacía).
 
 # 5. Iniciar la API (ejecutar desde la carpeta del proyecto: nlog.config y ./LogsMk
 #    se resuelven contra el directorio actual)
@@ -686,8 +686,8 @@ Orden recomendado para levantar MarketAudit completo en local:
 
 ```text
 1. Base de datos
-   └─ Restaurar la base principal (tablas + SPs + datos maestros) y crear la base de reportes.
-      Usar el backup entregado junto con el código.
+   └─ Restaurar el backup entregado junto con el código (base completa con datos)
+      y crear la base de reportes.
 2. Backend (este repo)
    └─ Configurar MarketAudit.WebAPI/App.json (ConnectionString, ReportConnectionString).
 3. Ejecutar Backend
