@@ -50,14 +50,14 @@ Del código se desprende el siguiente dominio de negocio:
 La API atiende a dos tipos de clientes:
 
 1. **Backoffice web** (repositorio `marketaudit_fe`, React): administración de clientes, usuarios y proyectos, carga masiva por Excel, informe de auditoría, portal de fotos y visor de logs.
-2. **Aplicación de censistas (móvil)**: *no está en estos repositorios*, pero su existencia se infiere del código:
+2. **Aplicación de censistas** (repositorio `marketaudit-app`, Android/Kotlin): relevamiento en el PDV y envío de respuestas. Endpoints que usa:
    - `POST /api/Auth/Login` devuelve el árbol completo de proyectos → rutas → PDVs → preguntas → respuestas del censista (el backoffice web solo usa `userId`/`userName`).
    - `POST /api/Report/CreateReport` recibe las respuestas de las encuestas ("Servicio para enviar los datos de las encuestas").
    - `GET /api/Report/GetReportPdv` devuelve indicadores de avance por censista.
    - `GET /api/Configuration/GetConfigurationXML` devuelve textos en formato `<resources><string name="...">` (formato de recursos Android).
    - `POST /api/LogApp/SetLogApp` registra logs enviados por la app.
 
-   > ⚠️ No determinado a partir del código disponible: repositorio, tecnología y versión de la aplicación móvil.
+   > Ver el README de `marketaudit-app` para el detalle de pantallas, flujos y comunicación con esta API.
 
 ### Responsabilidad del Backend
 
@@ -96,7 +96,7 @@ Arquitectura en **capas** con una solución de 5 proyectos (`MarketAudit.sln`). 
 flowchart LR
     subgraph Clientes
         FE[Backoffice web<br/>marketaudit_fe]
-        APP[App móvil censistas<br/>⚠️ fuera de estos repos]
+        APP[App móvil censistas<br/>marketaudit-app]
     end
 
     subgraph WebAPI[MarketAudit.WebAPI]
@@ -624,7 +624,7 @@ No existen proyectos de test en la solución (no hay xUnit/NUnit/MSTest ni carpe
 
 | Integración | Uso | Dónde |
 |---|---|---|
-| **Amazon S3** (`https://weask-images.s3.amazonaws.com`) | Almacén de imágenes (fotos de relevamiento, imagen de ruta `map.png`). La API **no sube** archivos: recibe URLs (⚠️ la subida la haría la app móvil). Para el ZIP de fotos las **descarga por HTTP público** (`WebClient`). | `ExportController.GetPhotos`, `ReportDetailRepository`, `Entities/Models/Route.cs` |
+| **Amazon S3** (`https://weask-images.s3.amazonaws.com`) | Almacén de imágenes (fotos de relevamiento, imagen de ruta `map.png`). La API **no sube** archivos: recibe URLs (la subida la hace la app `marketaudit-app` mediante Cognito). Para el ZIP de fotos las **descarga por HTTP público** (`WebClient`). | `ExportController.GetPhotos`, `ReportDetailRepository`, `Entities/Models/Route.cs` |
 | **SQL Server** (2 bases) | Persistencia | `MarketAudit.DataAccess` |
 | **Sistema de archivos local** | `Files/` (temporales de importación/exportación y caché de fotos `Files/{id}_downloadPhoto`), `LogsMk/` | `ProjectController`, `ExportController` |
 
@@ -706,8 +706,8 @@ Orden recomendado para levantar MarketAudit completo en local:
 9. Verificar comunicación
    └─ Ir a "Proyectos" y "Clientes": deben cargar las grillas.
       En el log del backend (LogsMk/) deben aparecer las requests con UserId/UserName.
-10. (Opcional) App móvil de censistas
-   └─ ⚠️ No incluida en estos repositorios.
+10. (Opcional) App móvil de censistas (repo marketaudit-app)
+   └─ Ver README de la app: compilar con Android Studio / ./gradlew installDebug.
 ```
 
 ---
